@@ -68,7 +68,7 @@
             <form id="createTripForm">
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="tripName" name="name" placeholder="Trip Name" required>
+                        <input type="text" class="form-control" id="tripName" name="name" placeholder="Trip Name" required maxlength="255">
                         <label for="tripName">Trip Name</label>
                     </div>
                     
@@ -100,14 +100,115 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Trip Modal -->
+<div class="modal fade" id="editTripModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Trip</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="editTripForm">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editTripName" name="name" placeholder="Trip Name" required maxlength="255">
+                        <label for="editTripName">Trip Name</label>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="editTripDescription" name="description" placeholder="Description" style="height: 100px"></textarea>
+                        <label for="editTripDescription">Description (Optional)</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="editStartDate" name="start_date">
+                                <label for="editStartDate">Start Date (Optional)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="editEndDate" name="end_date">
+                                <label for="editEndDate">End Date (Optional)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Trip</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteTripModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger">Delete Trip</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <svg class="text-danger" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </div>
+                    <p class="mb-3">Are you sure you want to delete "<strong id="deleteTripName"></strong>"?</p>
+                    <p class="text-muted small mb-0">This action cannot be undone and will also delete all days and activities in this trip.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete Trip</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trip Detail Modal -->
+<div class="modal fade" id="tripDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tripDetailTitle">Trip Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="tripDetailContent">
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading trip details...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="editTripFromDetail">Edit Trip</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
 // Trip management functionality
+let currentEditingTripId = null;
+let currentDeletingTripId = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     loadTrips();
     setupCreateTripForm();
+    setupEditTripForm();
+    setupDeleteConfirmation();
+    setupTripDetailModal();
 });
 
 async function loadTrips() {
@@ -136,28 +237,36 @@ async function loadTrips() {
         }
         
         tripsList.innerHTML = trips.map(trip => `
-            <div class="card trip-card fade-in">
+            <div class="card trip-card fade-in" data-trip-id="${trip.id}">
                 <div class="card-body">
                     <div class="trip-header">
-                        <div>
+                        <div class="flex-grow-1">
                             <h5 class="trip-title">${escapeHtml(trip.name)}</h5>
                             <div class="trip-dates text-muted">
                                 ${trip.start_date || trip.end_date ? TravelPlanner.formatDateRange(trip.start_date, trip.end_date) : 'Dates not set'}
                             </div>
                         </div>
                         <div class="trip-actions">
-                            <button class="btn btn-sm btn-outline-primary" onclick="viewTrip(${trip.id})">
-                                View Details
-                            </button>
-                            <button class="btn btn-sm btn-outline-secondary" onclick="editTrip(${trip.id})">
-                                Edit
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteTrip(${trip.id}, '${escapeHtml(trip.name)}')">
-                                Delete
-                            </button>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewTrip(${trip.id})" title="View Details">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="editTrip(${trip.id})" title="Edit Trip">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="showDeleteConfirmation(${trip.id}, '${escapeHtml(trip.name)}')" title="Delete Trip">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
                     ${trip.description ? `<p class="text-muted mt-2 mb-0">${escapeHtml(trip.description)}</p>` : ''}
+                    <div class="mt-2">
+                        <small class="text-muted">
+                            Created ${new Date(trip.created_at).toLocaleDateString()}
+                            ${trip.updated_at !== trip.created_at ? `• Updated ${new Date(trip.updated_at).toLocaleDateString()}` : ''}
+                        </small>
+                    </div>
                 </div>
             </div>
         `).join('');
@@ -187,15 +296,14 @@ function setupCreateTripForm() {
         
         const formData = new FormData(form);
         const data = {
-            name: formData.get('name'),
-            description: formData.get('description') || null,
+            name: formData.get('name').trim(),
+            description: formData.get('description')?.trim() || null,
             start_date: formData.get('start_date') || null,
             end_date: formData.get('end_date') || null
         };
         
-        // Validate form
-        const validation = TravelPlanner.validateForm(form);
-        if (!validation.isValid) {
+        // Enhanced validation
+        if (!validateTripData(data, form)) {
             return;
         }
         
@@ -221,32 +329,293 @@ function setupCreateTripForm() {
     });
 }
 
-function viewTrip(tripId) {
-    // TODO: Implement trip detail view (Task 9)
-    TravelPlanner.showSuccess(`Trip detail view for trip ${tripId} coming soon!`);
+function setupEditTripForm() {
+    const form = document.getElementById('editTripForm');
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!currentEditingTripId) {
+            TravelPlanner.showError('No trip selected for editing.');
+            return;
+        }
+        
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name').trim(),
+            description: formData.get('description')?.trim() || null,
+            start_date: formData.get('start_date') || null,
+            end_date: formData.get('end_date') || null
+        };
+        
+        // Enhanced validation
+        if (!validateTripData(data, form)) {
+            return;
+        }
+        
+        const submitBtn = form.querySelector('button[type="submit"]');
+        TravelPlanner.showLoading(submitBtn);
+        
+        try {
+            await TravelPlanner.put(`/trips/${currentEditingTripId}`, data);
+            TravelPlanner.showSuccess('Trip updated successfully!');
+            
+            // Close modal and reload trips
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editTripModal'));
+            modal.hide();
+            currentEditingTripId = null;
+            loadTrips();
+            
+        } catch (error) {
+            console.error('Failed to update trip:', error);
+            TravelPlanner.showError('Failed to update trip. Please try again.');
+        } finally {
+            TravelPlanner.hideLoading(submitBtn);
+        }
+    });
 }
 
-function editTrip(tripId) {
-    // TODO: Implement trip editing (Task 9)
-    TravelPlanner.showSuccess(`Trip editing for trip ${tripId} coming soon!`);
+function setupDeleteConfirmation() {
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
+    confirmBtn.addEventListener('click', async function() {
+        if (!currentDeletingTripId) {
+            TravelPlanner.showError('No trip selected for deletion.');
+            return;
+        }
+        
+        TravelPlanner.showLoading(confirmBtn);
+        
+        try {
+            await TravelPlanner.delete(`/trips/${currentDeletingTripId}`);
+            TravelPlanner.showSuccess('Trip deleted successfully!');
+            
+            // Close modal and reload trips
+            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteTripModal'));
+            modal.hide();
+            currentDeletingTripId = null;
+            loadTrips();
+            
+        } catch (error) {
+            console.error('Failed to delete trip:', error);
+            TravelPlanner.showError('Failed to delete trip. Please try again.');
+        } finally {
+            TravelPlanner.hideLoading(confirmBtn);
+        }
+    });
 }
 
-async function deleteTrip(tripId, tripName) {
-    if (!confirm(`Are you sure you want to delete "${tripName}"? This action cannot be undone.`)) {
-        return;
-    }
+function setupTripDetailModal() {
+    const editBtn = document.getElementById('editTripFromDetail');
+    editBtn.addEventListener('click', function() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('tripDetailModal'));
+        modal.hide();
+        
+        // Get trip ID from the modal content
+        const tripId = editBtn.dataset.tripId;
+        if (tripId) {
+            editTrip(parseInt(tripId));
+        }
+    });
+}
+
+async function viewTrip(tripId) {
+    const modal = new bootstrap.Modal(document.getElementById('tripDetailModal'));
+    const title = document.getElementById('tripDetailTitle');
+    const content = document.getElementById('tripDetailContent');
+    const editBtn = document.getElementById('editTripFromDetail');
+    
+    // Store trip ID for edit button
+    editBtn.dataset.tripId = tripId;
+    
+    // Show loading state
+    content.innerHTML = `
+        <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading trip details...</span>
+            </div>
+        </div>
+    `;
+    
+    modal.show();
     
     try {
-        await TravelPlanner.delete(`/trips/${tripId}`);
-        TravelPlanner.showSuccess('Trip deleted successfully!');
-        loadTrips();
+        const response = await TravelPlanner.get(`/trips/${tripId}`);
+        const trip = response.data;
+        
+        title.textContent = trip.name;
+        
+        // Get trip days and activities for comprehensive view
+        let daysHtml = '';
+        try {
+            const daysResponse = await TravelPlanner.get(`/trips/${tripId}/days`);
+            const days = daysResponse.data;
+            
+            if (days.length > 0) {
+                daysHtml = `
+                    <h6 class="mt-4 mb-3">Itinerary (${days.length} day${days.length !== 1 ? 's' : ''})</h6>
+                    <div class="days-list">
+                        ${days.map(day => `
+                            <div class="border rounded p-3 mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong>Day ${day.day_number}</strong>
+                                    <small class="text-muted">${TravelPlanner.formatDate(day.date)}</small>
+                                </div>
+                                <div class="text-muted small">Activities will be shown here when Task 10-11 are complete</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                daysHtml = `
+                    <div class="text-center py-4">
+                        <p class="text-muted">No days added to this trip yet.</p>
+                        <small class="text-muted">Day management will be available in upcoming tasks.</small>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.warn('Could not load trip days:', error);
+            daysHtml = '<div class="text-muted small">Day information temporarily unavailable.</div>';
+        }
+        
+        content.innerHTML = `
+            <div class="trip-detail-content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6 class="mb-3">Trip Information</h6>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="text-muted" style="width: 120px;">Name:</td>
+                                <td><strong>${escapeHtml(trip.name)}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Description:</td>
+                                <td>${trip.description ? escapeHtml(trip.description) : '<em class="text-muted">No description</em>'}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Dates:</td>
+                                <td>${trip.start_date || trip.end_date ? TravelPlanner.formatDateRange(trip.start_date, trip.end_date) : '<em class="text-muted">Dates not set</em>'}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Created:</td>
+                                <td>${new Date(trip.created_at).toLocaleString()}</td>
+                            </tr>
+                            ${trip.updated_at !== trip.created_at ? `
+                            <tr>
+                                <td class="text-muted">Updated:</td>
+                                <td>${new Date(trip.updated_at).toLocaleString()}</td>
+                            </tr>
+                            ` : ''}
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title">Quick Stats</h6>
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        <div class="h4 mb-0">0</div>
+                                        <small class="text-muted">Days</small>
+                                    </div>
+                                    <div>
+                                        <div class="h4 mb-0">0</div>
+                                        <small class="text-muted">Activities</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                ${daysHtml}
+            </div>
+        `;
+        
     } catch (error) {
-        console.error('Failed to delete trip:', error);
-        TravelPlanner.showError('Failed to delete trip. Please try again.');
+        console.error('Failed to load trip details:', error);
+        content.innerHTML = `
+            <div class="text-center py-4">
+                <div class="text-danger mb-3">
+                    <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                </div>
+                <h6 class="text-danger">Failed to load trip details</h6>
+                <p class="text-muted">Please try again later.</p>
+            </div>
+        `;
     }
+}
+
+async function editTrip(tripId) {
+    try {
+        const response = await TravelPlanner.get(`/trips/${tripId}`);
+        const trip = response.data;
+        
+        // Populate edit form
+        document.getElementById('editTripName').value = trip.name;
+        document.getElementById('editTripDescription').value = trip.description || '';
+        document.getElementById('editStartDate').value = trip.start_date || '';
+        document.getElementById('editEndDate').value = trip.end_date || '';
+        
+        currentEditingTripId = tripId;
+        
+        // Show edit modal
+        const modal = new bootstrap.Modal(document.getElementById('editTripModal'));
+        modal.show();
+        
+    } catch (error) {
+        console.error('Failed to load trip for editing:', error);
+        TravelPlanner.showError('Failed to load trip data. Please try again.');
+    }
+}
+
+function showDeleteConfirmation(tripId, tripName) {
+    document.getElementById('deleteTripName').textContent = tripName;
+    currentDeletingTripId = tripId;
+    
+    const modal = new bootstrap.Modal(document.getElementById('deleteTripModal'));
+    modal.show();
+}
+
+function validateTripData(data, form) {
+    // Clear previous validation
+    form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+    
+    let isValid = true;
+    
+    // Validate trip name
+    if (!data.name || data.name.length === 0) {
+        isValid = false;
+        showFieldError(form.querySelector('[name="name"]'), 'Trip name is required');
+    } else if (data.name.length > 255) {
+        isValid = false;
+        showFieldError(form.querySelector('[name="name"]'), 'Trip name must be 255 characters or less');
+    }
+    
+    // Validate dates
+    if (data.start_date && data.end_date) {
+        const startDate = new Date(data.start_date);
+        const endDate = new Date(data.end_date);
+        
+        if (startDate > endDate) {
+            isValid = false;
+            showFieldError(form.querySelector('[name="end_date"]'), 'End date must be after start date');
+        }
+    }
+    
+    return isValid;
+}
+
+function showFieldError(field, message) {
+    field.classList.add('is-invalid');
+    const feedback = document.createElement('div');
+    feedback.className = 'invalid-feedback';
+    feedback.textContent = message;
+    field.parentNode.appendChild(feedback);
 }
 
 function escapeHtml(text) {
+    if (!text) return '';
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
