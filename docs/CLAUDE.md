@@ -222,7 +222,7 @@ docker exec -it travel_planner_postgres psql -U travel_planner -d travel_planner
 - **Debug Mode**: Clear distinction between development and production
 - **Performance Monitoring**: Log slow queries and requests
 
-## Learned Standards (from Tasks 1-4)
+## Learned Standards (from Tasks 1-5)
 
 ### Database Connection Pattern
 ```python
@@ -309,3 +309,55 @@ def create_app(env_name: Optional[str] = None) -> Flask:
 - Production/base config: Uses `DATABASE_URL` environment variable  
 - .env file should contain both for flexibility
 - IPv4 addresses (127.0.0.1) preferred over localhost for Docker compatibility
+
+### Database Transaction Management (from Task 5)
+```python
+# Critical fix for execute_query function
+if fetch_one:
+    result = cur.fetchone()
+    conn.commit()  # MUST commit INSERT/UPDATE...RETURNING queries
+    return result
+```
+
+### Model Constructor Pattern (from Task 5)
+```python
+# Correct pattern for get_by_id methods
+@classmethod
+def get_by_id(cls, id: int) -> Optional['ModelName']:
+    result = execute_query("SELECT id, field1, field2... FROM table WHERE id = %s", (id,), fetch_one=True)
+    if result:
+        # Use explicit keyword arguments, not positional unpacking
+        return cls(field1=result[1], field2=result[2], ..., id=result[0])
+    return None
+```
+
+### REST Endpoint Implementation Pattern (from Task 5)
+```python
+@app.route('/api/resource', methods=['POST'])
+def create_resource():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify(create_error_response("VALIDATION_ERROR", "Request body must be JSON")), 400
+        
+        # Parse and validate input data (dates, times, required fields)
+        resource = Model(**validated_data)
+        resource.save()
+        
+        return jsonify(create_success_response(resource.to_dict())), 201
+    except ValidationError as e:
+        return jsonify(create_error_response("VALIDATION_ERROR", str(e))), 400
+    except Exception as e:
+        logger.error(f"Failed to create resource: {e}")
+        return jsonify(create_error_response("DATABASE_ERROR", "Failed to create resource")), 500
+```
+
+### Foreign Key Validation Pattern
+- Always verify parent resources exist before creating children
+- Return 404 with descriptive message if parent not found
+- Use consistent error messages: "Parent with id {id} not found"
+
+### Date/Time Input Validation
+- Dates: YYYY-MM-DD format using `datetime.strptime(date_str, '%Y-%m-%d').date()`
+- Times: HH:MM format using `datetime.strptime(time_str, '%H:%M').time()`  
+- Return 400 with format requirement in error message if parsing fails
