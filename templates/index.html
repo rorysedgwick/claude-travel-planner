@@ -1,14 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Travel Planner - Your Trips{% endblock %}
+{% block title %}NEON VOYAGER - Your Radical Trips{% endblock %}
 
 {% block content %}
+<!-- 80s Hero Section -->
+<div class="retro-hero mb-5">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h1 class="hero-title">🌴 RADICAL ADVENTURES AWAIT 🌴</h1>
+            <p class="hero-subtitle">Plan your totally awesome trips with the most bodacious travel planner in the galaxy!</p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <div class="retro-logo">
+                <div class="neon-text">NEON</div>
+                <div class="cyber-text">VOYAGER</div>
+                <div class="tagline">✨ 1985 ✨</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-8">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h2">My Trips</h1>
+            <h2 class="h2">🚀 MY EPIC JOURNEYS 🚀</h2>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTripModal">
-                <i class="bi bi-plus-circle"></i> New Trip
+                <i class="bi bi-plus-circle"></i> ✨ NEW ADVENTURE ✨
             </button>
         </div>
 
@@ -24,34 +41,47 @@
     </div>
 
     <div class="col-lg-4">
-        <div class="card">
+        <div class="card retro-card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Quick Actions</h5>
+                <h5 class="card-title mb-0">🎮 POWER MOVES 🎮</h5>
             </div>
             <div class="card-body">
-                <div class="d-grid gap-2">
+                <div class="d-grid gap-3">
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createTripModal">
-                        Create New Trip
+                        🌟 PLAN ADVENTURE 🌟
                     </button>
                     <button type="button" class="btn btn-outline-secondary" onclick="location.reload()">
-                        Refresh Trips
+                        🔄 REFRESH MATRIX 🔄
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="card mt-3">
+        <div class="card retro-card mt-4">
             <div class="card-header">
-                <h6 class="card-title mb-0">Getting Started</h6>
+                <h6 class="card-title mb-0">📼 TOTALLY RADICAL FEATURES 📼</h6>
             </div>
             <div class="card-body small">
-                <p>Welcome to Travel Planner! Here you can:</p>
-                <ul class="mb-0">
-                    <li>Create and manage your trips</li>
-                    <li>Add days to your itinerary</li>
-                    <li>Schedule activities for each day</li>
-                    <li>Organize everything chronologically</li>
+                <p class="neon-text-small">Welcome to the future of travel, dude! Here you can:</p>
+                <ul class="retro-list mb-0">
+                    <li>🎯 Create and manage your epic journeys</li>
+                    <li>📅 Add days to your cosmic itinerary</li>
+                    <li>⏰ Schedule totally awesome activities</li>
+                    <li>🌈 Organize everything chronologically</li>
                 </ul>
+            </div>
+        </div>
+
+        <div class="card retro-card mt-4">
+            <div class="card-header">
+                <h6 class="card-title mb-0">🏝️ TRAVEL AGENCY SPECIAL 🏝️</h6>
+            </div>
+            <div class="card-body small">
+                <div class="promo-text">
+                    <div class="miami-special">🌊 MIAMI VICE SPECIAL 🌊</div>
+                    <div class="promo-detail">Book your rad vacation today!</div>
+                    <div class="hotline">☎️ CALL: 1-800-RAD-TRIP ☎️</div>
+                </div>
             </div>
         </div>
     </div>
