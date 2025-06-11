@@ -361,3 +361,56 @@ def create_resource():
 - Dates: YYYY-MM-DD format using `datetime.strptime(date_str, '%Y-%m-%d').date()`
 - Times: HH:MM format using `datetime.strptime(time_str, '%H:%M').time()`  
 - Return 400 with format requirement in error message if parsing fails
+
+### Frontend Integration Standards (from Task 8)
+
+#### Flask Template Integration
+```python
+# Frontend route pattern
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+# Separate API info endpoint
+@app.route('/api', methods=['GET'])
+def api_info():
+    return jsonify(api_documentation)
+```
+
+#### Static File Organization
+```
+static/
+├── css/style.css      # Custom CSS with CSS custom properties
+└── js/app.js          # JavaScript utilities and API wrapper
+
+templates/
+├── base.html          # Bootstrap base template with navigation
+└── index.html         # Page-specific content extending base
+```
+
+#### JavaScript Architecture Pattern
+```javascript
+// Global API wrapper object
+const TravelPlanner = {
+    async get(endpoint) { /* HTTP GET */ },
+    async post(endpoint, data) { /* HTTP POST */ },
+    async put(endpoint, data) { /* HTTP PUT */ },
+    async delete(endpoint) { /* HTTP DELETE */ },
+    
+    // UI utilities
+    showLoading(element), hideLoading(element),
+    showSuccess(message), showError(message),
+    validateForm(form), formatDate(date)
+};
+```
+
+#### Bootstrap Integration Standards
+- Use Bootstrap 5.3 CDN for consistency and performance
+- Custom CSS variables for theme customization
+- Responsive design with mobile-first approach
+- Form validation integrated with Bootstrap styling classes
+
+#### Port Configuration
+- Default port 5001 to avoid macOS AirPlay conflicts
+- Environment variable `FLASK_RUN_PORT` for customization
+- Use `0.0.0.0` host for Docker compatibility

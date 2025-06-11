@@ -5,7 +5,7 @@ Provides REST endpoints for trip, day, and activity management.
 
 import os
 import logging
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from typing import Dict, Any, Optional
 import atexit
@@ -179,8 +179,13 @@ def register_routes(app: Flask) -> None:
             }), 500
     
     @app.route('/', methods=['GET'])
-    def root() -> Dict[str, Any]:
-        """Root endpoint with API information."""
+    def index():
+        """Frontend application main page."""
+        return render_template('index.html')
+    
+    @app.route('/api', methods=['GET'])
+    def api_info() -> Dict[str, Any]:
+        """API information endpoint."""
         return jsonify({
             "success": True,
             "data": {
@@ -764,8 +769,9 @@ if __name__ == '__main__':
     logger.info(f"Starting Flask app in {env} mode")
     logger.info(f"Debug mode: {debug}")
     
+    port = int(os.environ.get('FLASK_RUN_PORT', 5001))
     app.run(
         host='0.0.0.0',
-        port=5000,
+        port=port,
         debug=debug
     )
