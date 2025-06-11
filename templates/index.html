@@ -203,9 +203,9 @@
     </div>
 </div>
 
-<!-- Trip Detail Modal -->
+<!-- Trip Detail Modal with Day & Activity Management -->
 <div class="modal fade" id="tripDetailModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tripDetailTitle">Trip Details</h5>
@@ -225,13 +225,190 @@
         </div>
     </div>
 </div>
+
+<!-- Add Day Modal -->
+<div class="modal fade" id="addDayModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Day to Trip</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="addDayForm">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="dayDate" name="date" required>
+                        <label for="dayDate">Date</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="dayNumber" name="day_number" min="1" required>
+                        <label for="dayNumber">Day Number</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Day</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Activity Modal -->
+<div class="modal fade" id="addActivityModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Activity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="addActivityForm">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="activityName" name="name" placeholder="Activity Name" required maxlength="255">
+                        <label for="activityName">Activity Name</label>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="activityDescription" name="description" placeholder="Description" style="height: 80px"></textarea>
+                        <label for="activityDescription">Description (Optional)</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="startTime" name="start_time">
+                                <label for="startTime">Start Time (Optional)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="endTime" name="end_time">
+                                <label for="endTime">End Time (Optional)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Activity</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Activity Modal -->
+<div class="modal fade" id="editActivityModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Activity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="editActivityForm">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editActivityName" name="name" placeholder="Activity Name" required maxlength="255">
+                        <label for="editActivityName">Activity Name</label>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="editActivityDescription" name="description" placeholder="Description" style="height: 80px"></textarea>
+                        <label for="editActivityDescription">Description (Optional)</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="editStartTime" name="start_time">
+                                <label for="editStartTime">Start Time (Optional)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="editEndTime" name="end_time">
+                                <label for="editEndTime">End Time (Optional)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Activity</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Day Confirmation Modal -->
+<div class="modal fade" id="deleteDayModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger">Delete Day</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <svg class="text-danger" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </div>
+                    <p class="mb-3">Are you sure you want to delete "<strong id="deleteDayInfo"></strong>"?</p>
+                    <p class="text-muted small mb-0">This will also delete all activities for this day.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteDayBtn">Delete Day</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Activity Confirmation Modal -->
+<div class="modal fade" id="deleteActivityModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger">Delete Activity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <svg class="text-danger" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </div>
+                    <p class="mb-3">Are you sure you want to delete "<strong id="deleteActivityName"></strong>"?</p>
+                    <p class="text-muted small mb-0">This action cannot be undone.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteActivityBtn">Delete Activity</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-// Trip management functionality
+// Trip, Day, and Activity management functionality
 let currentEditingTripId = null;
 let currentDeletingTripId = null;
+let currentTripId = null;
+let currentDayId = null;
+let currentEditingActivityId = null;
+let currentDeletingDayId = null;
+let currentDeletingActivityId = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     loadTrips();
@@ -239,6 +416,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEditTripForm();
     setupDeleteConfirmation();
     setupTripDetailModal();
+    setupDayManagement();
+    setupActivityManagement();
 });
 
 async function loadTrips() {
@@ -456,57 +635,35 @@ async function viewTrip(tripId) {
     // Store trip ID for edit button
     editBtn.dataset.tripId = tripId;
     
-    // Show loading state
+    // Show enhanced loading state
+    title.textContent = 'Loading...';
     content.innerHTML = `
-        <div class="text-center py-4">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading trip details...</span>
+        <div class="text-center py-5">
+            <div class="mb-3">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading trip details...</span>
+                </div>
             </div>
+            <h6 class="text-muted">Loading trip details...</h6>
+            <p class="text-muted small">This may take a moment</p>
         </div>
     `;
     
     modal.show();
     
     try {
-        const response = await TravelPlanner.get(`/trips/${tripId}`);
-        const trip = response.data;
+        // Load trip details with better error handling
+        const tripResponse = await Promise.race([
+            TravelPlanner.get(`/trips/${tripId}`),
+            new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Request timeout')), 10000)
+            )
+        ]);
         
+        const trip = tripResponse.data;
         title.textContent = trip.name;
         
-        // Get trip days and activities for comprehensive view
-        let daysHtml = '';
-        try {
-            const daysResponse = await TravelPlanner.get(`/trips/${tripId}/days`);
-            const days = daysResponse.data;
-            
-            if (days.length > 0) {
-                daysHtml = `
-                    <h6 class="mt-4 mb-3">Itinerary (${days.length} day${days.length !== 1 ? 's' : ''})</h6>
-                    <div class="days-list">
-                        ${days.map(day => `
-                            <div class="border rounded p-3 mb-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <strong>Day ${day.day_number}</strong>
-                                    <small class="text-muted">${TravelPlanner.formatDate(day.date)}</small>
-                                </div>
-                                <div class="text-muted small">Activities will be shown here when Task 10-11 are complete</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                daysHtml = `
-                    <div class="text-center py-4">
-                        <p class="text-muted">No days added to this trip yet.</p>
-                        <small class="text-muted">Day management will be available in upcoming tasks.</small>
-                    </div>
-                `;
-            }
-        } catch (error) {
-            console.warn('Could not load trip days:', error);
-            daysHtml = '<div class="text-muted small">Day information temporarily unavailable.</div>';
-        }
-        
+        // Render trip details immediately, then load days and activities
         content.innerHTML = `
             <div class="trip-detail-content">
                 <div class="row">
@@ -541,35 +698,64 @@ async function viewTrip(tripId) {
                         <div class="card bg-light">
                             <div class="card-body">
                                 <h6 class="card-title">Quick Stats</h6>
-                                <div class="text-center">
+                                <div class="text-center" id="tripStats">
                                     <div class="mb-2">
-                                        <div class="h4 mb-0">0</div>
-                                        <small class="text-muted">Days</small>
-                                    </div>
-                                    <div>
-                                        <div class="h4 mb-0">0</div>
-                                        <small class="text-muted">Activities</small>
+                                        <div class="spinner-border spinner-border-sm text-muted" role="status"></div>
+                                        <small class="text-muted d-block mt-1">Loading...</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                ${daysHtml}
+                
+                <!-- Days Management Section -->
+                <div class="mt-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0">🗓️ Trip Itinerary</h6>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="showAddDay(${tripId})" id="addDayBtn">
+                            <i class="bi bi-plus-circle"></i> Add Day
+                        </button>
+                    </div>
+                    <div id="daysList">
+                        <div class="text-center py-3">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Loading days...</span>
+                            </div>
+                            <p class="text-muted small mt-2 mb-0">Loading itinerary...</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
         
+        // Load days and activities in the background
+        await loadTripDaysAndActivities(tripId);
+        
     } catch (error) {
         console.error('Failed to load trip details:', error);
+        title.textContent = 'Error Loading Trip';
+        
+        const isTimeout = error.message.includes('timeout');
+        const errorMessage = isTimeout ? 'Request timed out' : 'Failed to load trip details';
+        
         content.innerHTML = `
-            <div class="text-center py-4">
+            <div class="text-center py-5">
                 <div class="text-danger mb-3">
                     <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                     </svg>
                 </div>
-                <h6 class="text-danger">Failed to load trip details</h6>
-                <p class="text-muted">Please try again later.</p>
+                <h6 class="text-danger">${errorMessage}</h6>
+                <p class="text-muted">${isTimeout ? 'The request took too long to complete.' : 'Please check your connection and try again.'}</p>
+                <div class="mt-3">
+                    <button class="btn btn-outline-primary" onclick="viewTrip(${tripId})">
+                        <i class="bi bi-arrow-clockwise"></i> Try Again
+                    </button>
+                    <button class="btn btn-outline-secondary ms-2" onclick="bootstrap.Modal.getInstance(document.getElementById('tripDetailModal')).hide()">
+                        Close
+                    </button>
+                </div>
             </div>
         `;
     }
@@ -649,6 +835,727 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+// Day and Activity Management Functions
+async function loadTripDaysAndActivities(tripId) {
+    currentTripId = tripId;
+    const daysList = document.getElementById('daysList');
+    const tripStats = document.getElementById('tripStats');
+    
+    // Show initial loading state
+    daysList.innerHTML = `
+        <div class="text-center py-3">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Loading days...</span>
+            </div>
+        </div>
+    `;
+    
+    try {
+        const daysResponse = await TravelPlanner.get(`/trips/${tripId}/days`);
+        const days = daysResponse.data;
+        
+        let totalActivities = 0;
+        
+        if (days.length === 0) {
+            daysList.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="mb-3">
+                        <svg class="text-muted" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/>
+                            <path d="M6.5 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5V4z"/>
+                        </svg>
+                    </div>
+                    <h6 class="text-muted">No days planned yet</h6>
+                    <p class="text-muted small mb-3">Start building your itinerary by adding your first day!</p>
+                    <button type="button" class="btn btn-primary" onclick="showAddDay(${tripId})">
+                        <i class="bi bi-plus-circle"></i> Add First Day
+                    </button>
+                </div>
+            `;
+        } else {
+            // First render days without activities to avoid race condition
+            daysList.innerHTML = days.map(day => renderDayCard({...day, activities: []})).join('');
+            
+            // Then load activities for each day using Promise.allSettled for better error handling
+            const activityPromises = days.map(async (day) => {
+                try {
+                    const activitiesResponse = await TravelPlanner.get(`/days/${day.id}/activities`);
+                    return { dayId: day.id, activities: activitiesResponse.data, success: true };
+                } catch (error) {
+                    console.warn(`Could not load activities for day ${day.id}:`, error);
+                    return { dayId: day.id, activities: [], success: false, error };
+                }
+            });
+            
+            const activityResults = await Promise.allSettled(activityPromises);
+            
+            // Process results and update each day card
+            activityResults.forEach((result, index) => {
+                if (result.status === 'fulfilled') {
+                    const { dayId, activities, success, error } = result.value;
+                    const day = days[index];
+                    day.activities = activities;
+                    totalActivities += activities.length;
+                    
+                    // Update the specific day card with activities
+                    const dayCard = document.querySelector(`[data-day-id="${dayId}"]`);
+                    if (dayCard) {
+                        const activitiesContainer = dayCard.querySelector('.activities-list');
+                        if (activitiesContainer) {
+                            if (activities.length > 0) {
+                                activitiesContainer.innerHTML = activities.map(activity => renderActivityItem(activity)).join('');
+                            } else {
+                                activitiesContainer.innerHTML = `
+                                    <div class="text-center py-3">
+                                        <p class="text-muted small mb-2">No activities planned for this day</p>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="showAddActivity(${dayId})">
+                                            <i class="bi bi-plus-circle"></i> Add First Activity
+                                        </button>
+                                    </div>
+                                `;
+                            }
+                        }
+                        
+                        // Show error state if loading failed
+                        if (!success && error) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'alert alert-warning alert-sm mt-2';
+                            errorDiv.innerHTML = `
+                                <small>
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                    Could not load activities for this day. 
+                                    <button class="btn btn-link btn-sm p-0" onclick="retryLoadActivities(${dayId})">Retry</button>
+                                </small>
+                            `;
+                            activitiesContainer.appendChild(errorDiv);
+                        }
+                    }
+                } else {
+                    console.error(`Failed to process activities for day ${index}:`, result.reason);
+                }
+            });
+        }
+        
+        // Update stats
+        tripStats.innerHTML = `
+            <div class="mb-2">
+                <div class="h4 mb-0">${days.length}</div>
+                <small class="text-muted">Days</small>
+            </div>
+            <div>
+                <div class="h4 mb-0">${totalActivities}</div>
+                <small class="text-muted">Activities</small>
+            </div>
+        `;
+        
+    } catch (error) {
+        console.error('Failed to load trip days:', error);
+        daysList.innerHTML = `
+            <div class="text-center py-4">
+                <div class="text-danger mb-3">
+                    <svg width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                </div>
+                <h6 class="text-danger">Failed to load days</h6>
+                <p class="text-muted small">Please try again later.</p>
+                <button class="btn btn-outline-primary btn-sm" onclick="loadTripDaysAndActivities(${tripId})">
+                    <i class="bi bi-arrow-clockwise"></i> Retry
+                </button>
+            </div>
+        `;
+    }
+}
+
+function renderDayCard(day) {
+    const activitiesHtml = day.activities.length > 0 
+        ? day.activities.map(activity => renderActivityItem(activity)).join('')
+        : `
+            <div class="text-center py-3">
+                <p class="text-muted small mb-2">No activities planned for this day</p>
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="showAddActivity(${day.id})">
+                    <i class="bi bi-plus-circle"></i> Add First Activity
+                </button>
+            </div>
+        `;
+    
+    return `
+        <div class="card day-card mb-3" data-day-id="${day.id}">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-sm btn-link text-decoration-none p-0 me-2" 
+                                onclick="toggleDay(${day.id})" 
+                                id="dayToggle${day.id}">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <div>
+                            <h6 class="mb-0">🗓️ Day ${day.day_number}</h6>
+                            <small class="text-muted">${TravelPlanner.formatDate(day.date)}</small>
+                        </div>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-outline-success" 
+                                onclick="showAddActivity(${day.id})" 
+                                title="Add Activity">
+                            <i class="bi bi-plus-circle"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" 
+                                onclick="showDeleteDay(${day.id}, ${day.day_number}, '${TravelPlanner.formatDate(day.date)}')" 
+                                title="Delete Day">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body collapse show" id="dayContent${day.id}">
+                <div class="activities-list">
+                    ${activitiesHtml}
+                </div>
+                <div class="mt-3">
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="showAddActivity(${day.id})">
+                        <i class="bi bi-plus-circle"></i> Add Activity
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderActivityItem(activity) {
+    const timeDisplay = activity.start_time || activity.end_time 
+        ? `
+            <div class="activity-time">
+                <small class="text-muted">
+                    ${activity.start_time ? TravelPlanner.formatTime(activity.start_time) : ''}
+                    ${activity.start_time && activity.end_time ? ' - ' : ''}
+                    ${activity.end_time ? TravelPlanner.formatTime(activity.end_time) : ''}
+                </small>
+            </div>
+        `
+        : '';
+    
+    return `
+        <div class="activity-item border rounded p-3 mb-2" data-activity-id="${activity.id}">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center mb-1">
+                        <h6 class="mb-0 me-2">✨ ${escapeHtml(activity.name)}</h6>
+                        ${timeDisplay}
+                    </div>
+                    ${activity.description ? `<p class="text-muted small mb-0">${escapeHtml(activity.description)}</p>` : ''}
+                </div>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-sm btn-outline-secondary" 
+                            onclick="editActivity(${activity.id})" 
+                            title="Edit Activity">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" 
+                            onclick="showDeleteActivity(${activity.id}, '${escapeHtml(activity.name)}')" 
+                            title="Delete Activity">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function toggleDay(dayId) {
+    const content = document.getElementById(`dayContent${dayId}`);
+    const toggle = document.getElementById(`dayToggle${dayId}`);
+    const icon = toggle.querySelector('i');
+    
+    if (content.classList.contains('show')) {
+        content.classList.remove('show');
+        icon.className = 'bi bi-chevron-right';
+    } else {
+        content.classList.add('show');
+        icon.className = 'bi bi-chevron-down';
+    }
+}
+
+function setupDayManagement() {
+    const addDayForm = document.getElementById('addDayForm');
+    const deleteDayBtn = document.getElementById('confirmDeleteDayBtn');
+    
+    addDayForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(addDayForm);
+        const data = {
+            date: formData.get('date'),
+            day_number: parseInt(formData.get('day_number'))
+        };
+        
+        if (!validateDayData(data, addDayForm)) {
+            return;
+        }
+        
+        const submitBtn = addDayForm.querySelector('button[type="submit"]');
+        TravelPlanner.showLoading(submitBtn);
+        
+        try {
+            await TravelPlanner.post(`/trips/${currentTripId}/days`, data);
+            TravelPlanner.showSuccess('Day added successfully!');
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addDayModal'));
+            modal.hide();
+            addDayForm.reset();
+            
+            // Reload days
+            await loadTripDaysAndActivities(currentTripId);
+            
+        } catch (error) {
+            console.error('Failed to add day:', error);
+            TravelPlanner.showError('Failed to add day. Please try again.');
+        } finally {
+            TravelPlanner.hideLoading(submitBtn);
+        }
+    });
+    
+    deleteDayBtn.addEventListener('click', async function() {
+        if (!currentDeletingDayId) return;
+        
+        TravelPlanner.showLoading(deleteDayBtn);
+        
+        try {
+            await TravelPlanner.delete(`/days/${currentDeletingDayId}`);
+            TravelPlanner.showSuccess('Day deleted successfully!');
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteDayModal'));
+            modal.hide();
+            currentDeletingDayId = null;
+            
+            await loadTripDaysAndActivities(currentTripId);
+            
+        } catch (error) {
+            console.error('Failed to delete day:', error);
+            TravelPlanner.showError('Failed to delete day. Please try again.');
+        } finally {
+            TravelPlanner.hideLoading(deleteDayBtn);
+        }
+    });
+}
+
+function setupActivityManagement() {
+    const addActivityForm = document.getElementById('addActivityForm');
+    const editActivityForm = document.getElementById('editActivityForm');
+    const deleteActivityBtn = document.getElementById('confirmDeleteActivityBtn');
+    
+    // Enhanced modal state management
+    ['addActivityModal', 'editActivityModal', 'deleteActivityModal'].forEach(modalId => {
+        const modalElement = document.getElementById(modalId);
+        if (modalElement) {
+            modalElement.addEventListener('show.bs.modal', () => {
+                ActivityManager.registerModal(modalId);
+            });
+            modalElement.addEventListener('hide.bs.modal', () => {
+                ActivityManager.unregisterModal(modalId);
+            });
+        }
+    });
+    
+    addActivityForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (ActivityManager.isLoading) {
+            return;
+        }
+        
+        const formData = new FormData(addActivityForm);
+        const data = {
+            name: formData.get('name').trim(),
+            description: formData.get('description')?.trim() || null,
+            start_time: formData.get('start_time') || null,
+            end_time: formData.get('end_time') || null
+        };
+        
+        if (!validateActivityData(data, addActivityForm)) {
+            return;
+        }
+        
+        const submitBtn = addActivityForm.querySelector('button[type="submit"]');
+        ActivityManager.setLoading(true);
+        TravelPlanner.showLoading(submitBtn);
+        
+        try {
+            await TravelPlanner.post(`/days/${currentDayId}/activities`, data);
+            TravelPlanner.showSuccess('Activity added successfully!');
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addActivityModal'));
+            modal.hide();
+            addActivityForm.reset();
+            clearValidation(addActivityForm);
+            
+            // Optimistic UI update - add activity immediately to the day card
+            const dayCard = document.querySelector(`[data-day-id="${currentDayId}"]`);
+            if (dayCard) {
+                const activitiesContainer = dayCard.querySelector('.activities-list');
+                if (activitiesContainer) {
+                    // Create temporary activity with placeholder ID
+                    const tempActivity = {
+                        id: 'temp-' + Date.now(),
+                        name: data.name,
+                        description: data.description,
+                        start_time: data.start_time,
+                        end_time: data.end_time
+                    };
+                    
+                    // Check if there are existing activities
+                    const existingActivities = activitiesContainer.querySelectorAll('.activity-item');
+                    if (existingActivities.length === 0) {
+                        // Replace empty state with new activity
+                        activitiesContainer.innerHTML = renderActivityItem(tempActivity);
+                    } else {
+                        // Add to existing activities
+                        activitiesContainer.insertAdjacentHTML('beforeend', renderActivityItem(tempActivity));
+                    }
+                }
+            }
+            
+            // Reload in background to get correct data
+            setTimeout(() => loadTripDaysAndActivities(currentTripId), 100);
+            
+        } catch (error) {
+            console.error('Failed to add activity:', error);
+            TravelPlanner.showError('Failed to add activity. Please try again.');
+        } finally {
+            ActivityManager.setLoading(false);
+            TravelPlanner.hideLoading(submitBtn);
+        }
+    });
+    
+    editActivityForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!currentEditingActivityId || ActivityManager.isLoading) return;
+        
+        const formData = new FormData(editActivityForm);
+        const data = {
+            name: formData.get('name').trim(),
+            description: formData.get('description')?.trim() || null,
+            start_time: formData.get('start_time') || null,
+            end_time: formData.get('end_time') || null
+        };
+        
+        if (!validateActivityData(data, editActivityForm)) {
+            return;
+        }
+        
+        const submitBtn = editActivityForm.querySelector('button[type="submit"]');
+        ActivityManager.setLoading(true);
+        TravelPlanner.showLoading(submitBtn);
+        
+        try {
+            await TravelPlanner.put(`/activities/${currentEditingActivityId}`, data);
+            TravelPlanner.showSuccess('Activity updated successfully!');
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editActivityModal'));
+            modal.hide();
+            
+            // Optimistic UI update
+            const activityElement = document.querySelector(`[data-activity-id="${currentEditingActivityId}"]`);
+            if (activityElement) {
+                activityElement.outerHTML = renderActivityItem({
+                    id: currentEditingActivityId,
+                    ...data
+                });
+            }
+            
+            currentEditingActivityId = null;
+            
+            // Reload in background to get correct data
+            setTimeout(() => loadTripDaysAndActivities(currentTripId), 100);
+            
+        } catch (error) {
+            console.error('Failed to update activity:', error);
+            TravelPlanner.showError('Failed to update activity. Please try again.');
+        } finally {
+            ActivityManager.setLoading(false);
+            TravelPlanner.hideLoading(submitBtn);
+        }
+    });
+    
+    deleteActivityBtn.addEventListener('click', async function() {
+        if (!currentDeletingActivityId || ActivityManager.isLoading) return;
+        
+        ActivityManager.setLoading(true);
+        TravelPlanner.showLoading(deleteActivityBtn);
+        
+        try {
+            await TravelPlanner.delete(`/activities/${currentDeletingActivityId}`);
+            TravelPlanner.showSuccess('Activity deleted successfully!');
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteActivityModal'));
+            modal.hide();
+            
+            // Optimistic UI update - remove activity immediately
+            const activityElement = document.querySelector(`[data-activity-id="${currentDeletingActivityId}"]`);
+            if (activityElement) {
+                activityElement.remove();
+            }
+            
+            currentDeletingActivityId = null;
+            
+            // Reload in background to update stats and handle edge cases
+            setTimeout(() => loadTripDaysAndActivities(currentTripId), 100);
+            
+        } catch (error) {
+            console.error('Failed to delete activity:', error);
+            TravelPlanner.showError('Failed to delete activity. Please try again.');
+            // Reload on error to restore correct state
+            loadTripDaysAndActivities(currentTripId);
+        } finally {
+            ActivityManager.setLoading(false);
+            TravelPlanner.hideLoading(deleteActivityBtn);
+        }
+    });
+}
+
+function showAddDay(tripId) {
+    currentTripId = tripId;
+    
+    // Auto-suggest next day number
+    const dayCards = document.querySelectorAll('.day-card');
+    const nextDayNumber = dayCards.length + 1;
+    document.getElementById('dayNumber').value = nextDayNumber;
+    
+    const modal = new bootstrap.Modal(document.getElementById('addDayModal'));
+    modal.show();
+}
+
+function showDeleteDay(dayId, dayNumber, dateStr) {
+    currentDeletingDayId = dayId;
+    document.getElementById('deleteDayInfo').textContent = `Day ${dayNumber} (${dateStr})`;
+    
+    const modal = new bootstrap.Modal(document.getElementById('deleteDayModal'));
+    modal.show();
+}
+
+function showAddActivity(dayId) {
+    currentDayId = dayId;
+    
+    const modal = new bootstrap.Modal(document.getElementById('addActivityModal'));
+    modal.show();
+}
+
+async function editActivity(activityId) {
+    try {
+        const response = await TravelPlanner.get(`/activities/${activityId}`);
+        const activity = response.data;
+        
+        document.getElementById('editActivityName').value = activity.name;
+        document.getElementById('editActivityDescription').value = activity.description || '';
+        document.getElementById('editStartTime').value = activity.start_time || '';
+        document.getElementById('editEndTime').value = activity.end_time || '';
+        
+        currentEditingActivityId = activityId;
+        
+        const modal = new bootstrap.Modal(document.getElementById('editActivityModal'));
+        modal.show();
+        
+    } catch (error) {
+        console.error('Failed to load activity for editing:', error);
+        TravelPlanner.showError('Failed to load activity data. Please try again.');
+    }
+}
+
+function showDeleteActivity(activityId, activityName) {
+    currentDeletingActivityId = activityId;
+    document.getElementById('deleteActivityName').textContent = activityName;
+    
+    const modal = new bootstrap.Modal(document.getElementById('deleteActivityModal'));
+    modal.show();
+}
+
+function validateDayData(data, form) {
+    clearValidation(form);
+    let isValid = true;
+    
+    if (!data.date) {
+        isValid = false;
+        showFieldError(form.querySelector('[name="date"]'), 'Date is required');
+    }
+    
+    if (!data.day_number || data.day_number < 1) {
+        isValid = false;
+        showFieldError(form.querySelector('[name="day_number"]'), 'Day number must be at least 1');
+    }
+    
+    return isValid;
+}
+
+function validateActivityData(data, form) {
+    clearValidation(form);
+    let isValid = true;
+    
+    // Enhanced name validation
+    if (!data.name || data.name.length === 0) {
+        isValid = false;
+        showFieldError(form.querySelector('[name="name"]'), 'Activity name is required');
+    } else if (data.name.length < 2) {
+        isValid = false;
+        showFieldError(form.querySelector('[name="name"]'), 'Activity name must be at least 2 characters');
+    } else if (data.name.length > 255) {
+        isValid = false;
+        showFieldError(form.querySelector('[name="name"]'), 'Activity name must be 255 characters or less');
+    }
+    
+    // Enhanced description validation
+    if (data.description && data.description.length > 1000) {
+        isValid = false;
+        showFieldError(form.querySelector('[name="description"]'), 'Description must be 1000 characters or less');
+    }
+    
+    // Enhanced time validation
+    if (data.start_time && data.end_time) {
+        const startTime = new Date(`2000-01-01T${data.start_time}`);
+        const endTime = new Date(`2000-01-01T${data.end_time}`);
+        
+        if (startTime >= endTime) {
+            isValid = false;
+            showFieldError(form.querySelector('[name="end_time"]'), 'End time must be after start time');
+        }
+        
+        // Check for reasonable time duration (less than 24 hours)
+        const durationMs = endTime - startTime;
+        const durationHours = durationMs / (1000 * 60 * 60);
+        if (durationHours > 24) {
+            isValid = false;
+            showFieldError(form.querySelector('[name="end_time"]'), 'Activity duration cannot exceed 24 hours');
+        }
+    }
+    
+    // Real-time validation feedback
+    if (isValid) {
+        form.querySelectorAll('.form-control').forEach(field => {
+            if (field.value.trim()) {
+                field.classList.add('is-valid');
+            }
+        });
+    }
+    
+    return isValid;
+}
+
+function clearValidation(form) {
+    form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    form.querySelectorAll('.is-valid').forEach(el => el.classList.remove('is-valid'));
+    form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+}
+
+// Enhanced state management for modal operations
+const ActivityManager = {
+    isLoading: false,
+    activeModals: new Set(),
+    retryAttempts: new Map(),
+    
+    setLoading(loading) {
+        this.isLoading = loading;
+        this.updateLoadingStates();
+    },
+    
+    updateLoadingStates() {
+        // Disable form submissions during loading
+        document.querySelectorAll('form button[type="submit"]').forEach(btn => {
+            btn.disabled = this.isLoading;
+        });
+    },
+    
+    registerModal(modalId) {
+        this.activeModals.add(modalId);
+    },
+    
+    unregisterModal(modalId) {
+        this.activeModals.delete(modalId);
+    },
+    
+    closeAllModals() {
+        this.activeModals.forEach(modalId => {
+            const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+            if (modal) {
+                modal.hide();
+            }
+        });
+        this.activeModals.clear();
+    }
+};
+
+// Retry function for activity loading failures
+async function retryLoadActivities(dayId) {
+    const retryKey = `day-${dayId}`;
+    const currentAttempts = ActivityManager.retryAttempts.get(retryKey) || 0;
+    
+    if (currentAttempts >= 3) {
+        TravelPlanner.showError('Maximum retry attempts reached. Please refresh the page.');
+        return;
+    }
+    
+    ActivityManager.retryAttempts.set(retryKey, currentAttempts + 1);
+    
+    try {
+        // Show loading state for this specific day
+        const dayCard = document.querySelector(`[data-day-id="${dayId}"]`);
+        if (dayCard) {
+            const activitiesContainer = dayCard.querySelector('.activities-list');
+            if (activitiesContainer) {
+                activitiesContainer.innerHTML = `
+                    <div class="text-center py-3">
+                        <div class="spinner-border spinner-border-sm text-primary" role="status">
+                            <span class="visually-hidden">Retrying...</span>
+                        </div>
+                        <p class="text-muted small mt-2 mb-0">Retrying...</p>
+                    </div>
+                `;
+            }
+        }
+        
+        const activitiesResponse = await TravelPlanner.get(`/days/${dayId}/activities`);
+        const activities = activitiesResponse.data;
+        
+        // Update the activities container
+        const activitiesContainer = dayCard.querySelector('.activities-list');
+        if (activitiesContainer) {
+            if (activities.length > 0) {
+                activitiesContainer.innerHTML = activities.map(activity => renderActivityItem(activity)).join('');
+            } else {
+                activitiesContainer.innerHTML = `
+                    <div class="text-center py-3">
+                        <p class="text-muted small mb-2">No activities planned for this day</p>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="showAddActivity(${dayId})">
+                            <i class="bi bi-plus-circle"></i> Add First Activity
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Clear retry count on success
+        ActivityManager.retryAttempts.delete(retryKey);
+        TravelPlanner.showSuccess('Activities loaded successfully!');
+        
+    } catch (error) {
+        console.error(`Retry failed for day ${dayId}:`, error);
+        
+        const activitiesContainer = dayCard.querySelector('.activities-list');
+        if (activitiesContainer) {
+            activitiesContainer.innerHTML = `
+                <div class="text-center py-3">
+                    <div class="alert alert-danger alert-sm">
+                        <small>
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Failed to load activities (Attempt ${currentAttempts + 1}/3).
+                            <button class="btn btn-link btn-sm p-0" onclick="retryLoadActivities(${dayId})">Try Again</button>
+                        </small>
+                    </div>
+                </div>
+            `;
+        }
+    }
 }
 </script>
 {% endblock %}
