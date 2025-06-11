@@ -157,7 +157,17 @@ class Trip:
         )
         
         if result:
-            return cls(*result[1:], id=result[0])
+            # result: (id, name, description, start_date, end_date, created_at, updated_at)
+            # constructor: (name, description, start_date, end_date, id, created_at, updated_at)
+            return cls(
+                name=result[1],
+                description=result[2], 
+                start_date=result[3],
+                end_date=result[4],
+                id=result[0],
+                created_at=result[5],
+                updated_at=result[6]
+            )
         return None
     
     @classmethod
@@ -173,7 +183,15 @@ class Trip:
             fetch_all=True
         )
         
-        return [cls(*result[1:], id=result[0]) for result in results]
+        return [cls(
+            name=result[1],
+            description=result[2], 
+            start_date=result[3],
+            end_date=result[4],
+            id=result[0],
+            created_at=result[5],
+            updated_at=result[6]
+        ) for result in results]
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert trip to dictionary representation."""
@@ -306,7 +324,15 @@ class Day:
         )
         
         if result:
-            return cls(*result[1:], id=result[0])
+            # result: (id, trip_id, date, day_number, created_at)
+            # constructor: (trip_id, date, day_number, id, created_at)
+            return cls(
+                trip_id=result[1],
+                date=result[2],
+                day_number=result[3],
+                id=result[0],
+                created_at=result[4]
+            )
         return None
     
     @classmethod
@@ -318,7 +344,13 @@ class Day:
             fetch_all=True
         )
         
-        return [cls(*result[1:], id=result[0]) for result in results]
+        return [cls(
+            trip_id=result[1],
+            date=result[2],
+            day_number=result[3],
+            id=result[0],
+            created_at=result[4]
+        ) for result in results]
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert day to dictionary representation."""
@@ -463,7 +495,19 @@ class Activity:
         )
         
         if result:
-            return cls(*result[1:], id=result[0])
+            # result: (id, day_id, name, description, start_time, end_time, order_index, created_at, updated_at)
+            # constructor: (day_id, name, description, start_time, end_time, order_index, id, created_at, updated_at)
+            return cls(
+                day_id=result[1],
+                name=result[2],
+                description=result[3],
+                start_time=result[4],
+                end_time=result[5],
+                order_index=result[6],
+                id=result[0],
+                created_at=result[7],
+                updated_at=result[8]
+            )
         return None
     
     @classmethod
@@ -477,7 +521,17 @@ class Activity:
             fetch_all=True
         )
         
-        return [cls(*result[1:], id=result[0]) for result in results]
+        return [cls(
+            day_id=result[1],
+            name=result[2],
+            description=result[3],
+            start_time=result[4],
+            end_time=result[5],
+            order_index=result[6],
+            id=result[0],
+            created_at=result[7],
+            updated_at=result[8]
+        ) for result in results]
     
     def update_order(self, new_order_index: int) -> 'Activity':
         """

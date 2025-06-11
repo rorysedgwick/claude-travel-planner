@@ -113,7 +113,9 @@ def execute_query(query: str, params: tuple = None, fetch_one: bool = False, fet
             cur.execute(query, params)
             
             if fetch_one:
-                return cur.fetchone()
+                result = cur.fetchone()
+                conn.commit()  # Commit after INSERT/UPDATE...RETURNING
+                return result
             elif fetch_all:
                 return cur.fetchall()
             else:
