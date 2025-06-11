@@ -85,11 +85,11 @@ During implementation, there are a number of prompts you can use at the start of
 > Always clear context window before using this prompt.
 
 ```markdown
-**First, review `CLAUDE.md` to understand our project standards and workflow.**
+**First, review `docs/CLAUDE.md` to understand our project standards and workflow.**
 
-Then refresh your memory by checking `HISTORY.md`. Review the `ARCHITECTURE.md` and `FUNCTIONAL.md` to understand what we are building.
+Then refresh your memory by checking `docs/HISTORY.md`. Review the `docs/architectural-spec.md` and `docs/functional-spec.md` to understand what we are building.
 
-We are working through `TO-DO.md` and are on task [`TASK_NUMBER`].
+We are working through `docs/TODO.md` and are on task [`TASK_NUMBER`].
 
 **Before implementing anything:**
 

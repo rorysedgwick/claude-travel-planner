@@ -1,139 +1,166 @@
-# AI Assisted Development
+# Travel Planner
 
-![Screenshot 2025-05-19 at 16 18 02](https://github.com/user-attachments/assets/885d196b-e9b8-47ee-84de-d4533c42f3b7)
+A web-based travel itinerary management system built with Flask API backend and separate frontend. Focus on itinerary building with activities, scheduling, and multi-day trip organization.
 
-## Table of Contents
+## Technology Stack
 
-- [Workshop](#workshop)
-  - [Overview](#overview)
-  - [What to Expect](#what-to-expect)
-  - [Getting Started](#getting-started)
-- [Task](#task)
-- [Human-AI Pair-Programming: A Rough Guide](#human-ai-pair-programming-a-rough-guide)
-  - [IQRE Process](#iqre-process)
-  - [Workshop Phases](#workshop-phases)
-    - [Conception](#conception)
-    - [Environment & Tasks](#environment--tasks)
-    - [Implementation](#implementation)
-    - [Context Management](#context-management)
-    - [Presentation](#presentation)
-  - [Key Guidelines](#key-guidelines)
-    - [AI Collaboration](#ai-collaboration)
-    - [Quality Assurance](#quality-assurance)
-    - [Success Criteria](#success-criteria)
+- **Backend**: Python 3.12+, Flask, PostgreSQL
+- **Frontend**: Bootstrap + custom CSS
+- **Architecture**: Flask REST API + separate frontend
+- **Database**: PostgreSQL with structured relationships
 
-## Workshop
+## Quick Start
 
-### Overview
+### Prerequisites
 
-In this workshop, you'll build a travel planning application using Claude Code or Codex as your AI partner. The focus is on practicing effective AI-assisted development, improving prompt hygiene, and fostering human oversight while collaborating with AI.
+- Python 3.12+
+- PostgreSQL database
+- pip package manager
 
-### Getting Started
+### Setup
 
-Create a new repository [using this repository as a template](https://github.com/new?template_name=fac-ws_ai_assisted_development&template_owner=TandemCreativeDev).
+1. **Clone and navigate to project**
+   ```bash
+   cd claude-travel-planner
+   ```
 
-## Task
+2. **Create virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-Details of the task are contained in the [brief](BRIEF.md).
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## IQRE Process
+4. **Environment configuration**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your database settings
+   ```
 
-Follow these four steps consistently throughout the workshop:
+5. **Database setup**
+   ```bash
+   # Create PostgreSQL database
+   createdb travel_planner_dev
+   
+   # Initialize database schema
+   python -c "from database import init_db; init_db()"
+   ```
 
-1. **Iterate**: Share ideas/request code from AI and develop specifications or features through iteration.
-2. **Question**: Review AI proposal, identify gaps, and refine through follow-up questions.
-3. **Accept**: If AI proposal is acceptable, allow it to generate the code or specs.
-4. [**Review/Create**](FYI.md): Understand generated code/specs. If inspired, create a new, enhanced solution based on AI's output.
-5. **Explain**: Present outputs to teammates, emphasising clear foundations and alignment.
+6. **Run the application**
+   ```bash
+   python app.py
+   ```
 
----
+   The API will be available at `http://localhost:5000`
 
-### Workshop Phases
+## Development Workflow
 
-> [!NOTE]
-> All prompts referred to in the below section are available [here](PROMPTS.md).
+### Code Quality
 
-#### CONCEPTION
+```bash
+# Format code
+black .
 
-- **Repository Setup**: Following [Getting Started](#getting-started)
-- **Specification Development**:
-  - Initialise a new instance of Claude Code or Codex. Use the [GENERATE SPECS](PROMPTS.md#generate-specs) prompt to have a conversation with the LLM and determine the specifications of your project.
-  - At the **end** of the conversation, use the [SPEC WRAP-UP](PROMPTS.md#spec-wrap-up) prompt - this should create `FUNCTIONAL.md`, `ARCHITECTURE.md`, and `CLAUDE.md` files.
+# Check code style
+flake8 .
 
-> **Output**: Initial documentation pushed to repo
+# Run tests
+pytest
+```
 
-#### ENVIRONMENT & TASKS
+### Database Management
 
-> [!WARNING]  
-> Set up your environment, install your dependencies etc. **manually**. AI can be terrible at this and using AI for setup could add a lot of config issues to your project before you can even get started.
+```bash
+# Development database
+createdb travel_planner_dev
 
-- Use the [GENERATE TO-DO](PROMPTS.md#generate-to-do) prompt to create `TO-DO.md`. Remember to follow the IQRE methodology! Check that your tasks actually make sense so that you don't end up with a lot of vague, impossibly scoped tasks that no one could follow!
-- Set up environment, frameworks, folder structure, install dependencies
-- Review tasks for dependencies and overlaps
+# Test database
+createdb travel_planner_test
 
-> **Output**: Ready-to-code environment with structured to-do list
+# Reset database
+python -c "from database import reset_db; reset_db()"
+```
 
-#### IMPLEMENTATION
+## API Endpoints
 
-**Per Task Process**:
+### Trips
+- `GET /api/trips` - List all trips
+- `POST /api/trips` - Create new trip
+- `GET /api/trips/{id}` - Get specific trip
+- `PUT /api/trips/{id}` - Update trip
+- `DELETE /api/trips/{id}` - Delete trip
 
-1. Use [KICKOFF/REFRESH MEMORY](PROMPTS.md#kickoff--refresh-memory) prompt
-2. Implement features
-3. Make sure to review constantly
-4. Use [CONTEXT RESET](PROMPTS.md#context-reset) after task completion
+### Days
+- `GET /api/trips/{trip_id}/days` - Get days for trip
+- `POST /api/trips/{trip_id}/days` - Add day to trip
+- `PUT /api/days/{id}` - Update day
+- `DELETE /api/days/{id}` - Delete day
 
-**Between Sessions**:
+### Activities
+- `GET /api/days/{day_id}/activities` - Get activities for day
+- `POST /api/days/{day_id}/activities` - Add activity to day
+- `GET /api/activities/{id}` - Get specific activity
+- `PUT /api/activities/{id}` - Update activity
+- `DELETE /api/activities/{id}` - Delete activity
+- `PUT /api/activities/{id}/reorder` - Reorder activity within day
 
-- Update `CLAUDE.md` with learned standards
+## Project Structure
 
-> **Output**: Incremental feature completion
+```
+/
+├── app.py              # Main Flask application and routes
+├── models.py           # Database models and schemas
+├── database.py         # Database connection and initialization
+├── utils.py            # Helper functions and utilities
+├── config.py           # Configuration settings
+├── requirements.txt    # Python dependencies
+├── .env.example        # Environment variables template
+├── .gitignore          # Git ignore patterns
+└── README.md           # This file
+```
 
-#### CONTEXT MANAGEMENT
+## Environment Variables
 
-- Use `HISTORY.md` for context summaries
-- Reset the LLM's context window after each task
-- Maintain clean workspace
+Create a `.env` file with the following variables:
 
-> **Output**: Archived context for reference, clean workspace
+```bash
+# Flask settings
+FLASK_ENV=development
+SECRET_KEY=your-secret-key-here
 
-#### PRESENTATION
+# Database settings
+DATABASE_URL=postgresql://localhost/travel_planner_dev
+DEV_DATABASE_URL=postgresql://localhost/travel_planner_dev
+TEST_DATABASE_URL=postgresql://localhost/travel_planner_test
 
-- Demo your project
-- Show AI collaboration examples
-- Present evolved standards
-- Reflect on deliberate architectural decisions
+# CORS settings (comma-separated origins)
+CORS_ORIGINS=http://localhost:3000,http://localhost:8080
+```
 
-> **Output**: 5-minute presentation with examples and demo
+## Testing
 
----
+```bash
+# Run all tests
+pytest
 
-### Key Guidelines
+# Run with coverage
+pytest --cov=.
 
-#### AI Collaboration
+# Run specific test file
+pytest test_activities.py
+```
 
-- **Explicit Prompting**: Always tell the LLM which files to reference (it won't do this automatically)
-- **Context Management**: Use [CONTEXT RESET](PROMPTS.md#context-reset) prompt to maintain clarity
-- **Standards Evolution**: Update `CLAUDE.md` when discovering new patterns
+## Contributing
 
-#### Quality Assurance
+1. Follow the code standards defined in `docs/CLAUDE.md`
+2. Use conventional commit messages
+3. Run code quality checks before committing
+4. All changes require pull request review
 
-- **Follow IQRE**: Apply the four steps consistently
-- **Review Obsessively**: You need to know everything the AI is generating - read [AI Code Review Guide](FYI.md) for pointers
-- **Maintain Standards**: Keep `CLAUDE.md` current and concise
+## License
 
-#### Success Criteria
-
-- Effective AI collaboration patterns
-- Evolved standards documented in `CLAUDE.md`
-- Clear architectural decisions
-
-#### Common Pitfalls
-
-AI code generators often struggle with:
-
-- Anything to do with setting up projects, installing dependencies
-- Being too ambitious, agreeing to everything
-- Staying inside the scope when working on a task
-- Using outdated tech stack, outdated versions of dependencies
-
-**Remember**: You're the human-in-the-loop. Guide the AI, don't just accept its output.
+This project is for educational purposes.
